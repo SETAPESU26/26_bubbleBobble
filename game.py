@@ -25,6 +25,11 @@ def on_fruit_collected(fruit):
     pass
 
 
+def bonus_life_threshold():
+    """Return a score value at which the player earns an extra life, or None to disable bonus lives."""
+    pass
+
+
 class Body:
     """Anything that falls and lands on platforms. x is the centre, y is the bottom edge."""
 
@@ -104,7 +109,6 @@ class Bubble:
             self.vel.y = -70
         self.pos += self.vel * dt
         self.pos.x = max(self.radius, min(WIDTH - self.radius, self.pos.x))
-        self.pos.y = max(self.pos.y, self.radius)
         if self.enemy:
             self.life -= dt
 
@@ -126,6 +130,7 @@ class Game:
 
     def reset(self):
         self.level, self.score, self.lives, self.combo, self.state = 1, 0, 3, 0, "play"
+        self.bonus_awarded = 0
         self.player = Player()
         self.fruits = []
         self.start_level()
@@ -170,6 +175,12 @@ class Game:
             return
         player = self.player
         player.update(dt, keys)
+        if player.on_ground:
+            self.combo = 0
+        threshold = bonus_life_threshold()
+        if threshold and self.score // threshold > self.bonus_awarded:
+            self.bonus_awarded = self.score // threshold
+            self.lives += 1
         if keys[pygame.K_SPACE]:
             self.blow_bubble()
         for enemy in self.enemies:
