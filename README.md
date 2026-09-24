@@ -38,17 +38,6 @@ python game.py
 
 **Controls:** Arrow keys to move, Up to jump, Space to blow a bubble, `R` to reset.
 
----
-
-## Initial Prompt Template (To Use With LLM)
-
-Use this to begin your interaction with the LLM:
-
-```
-I'm working on a Bubble Bobble-lite clone using Python and Pygame. I have a single-file game.py that mostly works but has one bug and three optional features left as empty functions. Please help me understand how the code is organized, find the bug through reasoning and testing rather than guessing, and guide me on implementing the missing features. Review any code I send to ensure it aligns with the expected behavior.
-```
-
----
 
 ## Tasks to Complete
 
