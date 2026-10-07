@@ -17,17 +17,21 @@ SPAWNS = [(200, 330), (600, 330), (100, 210), (700, 210), (150, 450), (650, 450)
 
 def bubble_tint(bubble):
     """Return an (r, g, b) colour for a bubble, or None for the default."""
-    pass
+    if bubble.enemy:
+        return (255, 180, 80)
+    if bubble.age < 0.5:
+        return (120, 230, 255)
+    if bubble.age < 1.0:
+        return (170, 220, 255)
+    return (200, 200, 255)
 
 
 def on_fruit_collected(fruit):
     """Called when the player picks up a fruit; add a sound, sparkle, or bonus effect here."""
-    pass
-
+    print(f"Fruit collected! +{fruit.value} points")
 
 def bonus_life_threshold():
-    """Return a score value at which the player earns an extra life, or None to disable bonus lives."""
-    pass
+    return 10000
 
 
 class Body:
@@ -150,7 +154,7 @@ class Game:
         if bubble.enemy or bubble.age >= 1.5:
             return
         for enemy in self.enemies:
-            if bubble.pos.distance_squared_to(enemy.center) < 24 * 2:
+            if bubble.pos.distance_squared_to(enemy.center) < 32 * 32:
                 self.enemies.remove(enemy)
                 bubble.enemy, bubble.vel.x = enemy, bubble.vel.x * 0.2
                 return
